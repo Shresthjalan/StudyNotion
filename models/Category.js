@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Define the Profile schema
-const tagsSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     name:{
         type:String,
         required: true,
@@ -16,5 +16,5 @@ const tagsSchema = new mongoose.Schema({
 });
 
 // Export the Profile model
-module.exports = mongoose.model("Tag", tagsSchema);
+module.exports = mongoose.model("Category", categorySchema);
  
