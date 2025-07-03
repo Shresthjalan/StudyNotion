@@ -12,8 +12,7 @@ exports.auth = async (req, res, next) => {
 		const token =
 			req.cookies.token ||
 			req.body.token ||
-			req.header("Authorisation").replace("Bearer ", "");
-            // Authorisation
+			req.header("Authorization").replace("Bearer ", "");
 
 		// If JWT is missing, return 401 Unauthorized response
 		if (!token) {
@@ -45,9 +44,9 @@ exports.auth = async (req, res, next) => {
 };
 exports.isStudent = async (req, res, next) => {
 	try {
-		//const userDetails = await User.findOne({ email: req.user.email });
+		const userDetails = await User.findOne({ email: req.user.email });
 
-		if (req.user.accountType !== "Student") {
+		if (userDetails.accountType !== "Student") {
 			return res.status(401).json({
 				success: false,
 				message: "This is a Protected Route for Students",
@@ -84,7 +83,7 @@ exports.isInstructor = async (req, res, next) => {
 
 		console.log(userDetails.accountType);
 
-		if (req.user.accountType !== "Instructor") {
+		if (userDetails.accountType !== "Instructor") {
 			return res.status(401).json({
 				success: false,
 				message: "This is a Protected Route for Instructor",

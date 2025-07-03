@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema(
 		],
 
 		// Add timestamps for when the document is created and last modified
-	},
+	},{ timestamps: true }
 	 
 );
 

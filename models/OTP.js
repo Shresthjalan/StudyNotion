@@ -23,7 +23,7 @@ async function sendVerificationEmail(email, otp) {
     const mailResponse = await mailSender(
       email,
       "Verification Email",
-      otp
+      emailTemplate(otp)
     );
 
     if (mailResponse?.response) {

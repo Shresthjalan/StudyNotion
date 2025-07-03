@@ -13,13 +13,13 @@ exports.resetPasswordToken = async (req, res) => {
 				message: `This Email: ${email} is not Registered With Us Enter a Valid Email `,
 			});
 		}
-		//const token = crypto.randomBytes(20).toString("hex");
-        const token =crypto.randomUUID();
+		const token = crypto.randomBytes(20).toString("hex");
+
 		const updatedDetails = await User.findOneAndUpdate(
 			{ email: email },
 			{
 				token: token,
-				resetPasswordExpires: Date.now() + 300000,
+				resetPasswordExpires: Date.now() + 3600000,
 			},
 			{ new: true }
 		);
@@ -54,7 +54,7 @@ exports.resetPassword = async (req, res) => {
 		if (confirmPassword !== password) {
 			return res.json({
 				success: false,
-				message: "Password and Confirm Password Do not Match",
+				message: "Password and Confirm Password Does not Match",
 			});
 		}
 		const userDetails = await User.findOne({ token: token });
@@ -64,7 +64,7 @@ exports.resetPassword = async (req, res) => {
 				message: "Token is Invalid",
 			});
 		}
-		if (!(userDetails.resetPasswordExpires < Date.now())) {
+		if (!(userDetails.resetPasswordExpires > Date.now())) {
 			return res.status(403).json({
 				success: false,
 				message: `Token is Expired, Please Regenerate Your Token`,
